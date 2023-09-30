@@ -4,9 +4,12 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 	"vjudge/pkg/judge"
 
+	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"google.golang.org/grpc"
+	"gopkg.in/src-d/go-git.v4"
 )
 
 type server struct {
@@ -18,8 +21,30 @@ func (s *server) JudgeCode(ctx context.Context, in *judge.SubmissionRequest) (*j
 	return judgement, nil
 }
 
+func cloneCodeFromGitHub(gitHubURL string) bool {
+	httpsAuth := &http.BasicAuth{
+		Username: "MehradMilan",                              // this can be anything except an empty string
+		Password: "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", // ideally, your GitHub token
+	}
+	judge.JudgeCode("Meow")
+	// urlParts := strings.Split(gitHubURL, "/")
+	_, err := git.PlainClone("../../resources", false, &git.CloneOptions{
+		URL:      gitHubURL,
+		Progress: os.Stdout,
+		Auth:     httpsAuth,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	return true
+}
+
+// func authenticateInGitHub(username string, passToken string) bool {
+// }
+
 func judgeCodeFromGitHubURL(gitHubURL string) *judge.JudgementReply {
 	// TODO: Your logic to pull code and judge it
+	cloneCodeFromGitHub(gitHubURL)
 	return &judge.JudgementReply{
 		Score: 90,
 		TestCaseResults: []*judge.TestCaseResult{

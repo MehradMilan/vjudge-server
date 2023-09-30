@@ -20,8 +20,7 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-
-	r, err := c.JudgeCode(ctx, &judge.SubmissionRequest{GithubUrl: "https://github.com/MehradMilan/"})
+	r, err := c.JudgeCode(ctx, &judge.SubmissionRequest{GithubUrl: "https://github.com/Org218/asm-chart-sorousherafat"})
 	if err != nil {
 		log.Fatalf("could not judge code: %v", err)
 	}
