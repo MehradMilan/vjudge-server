@@ -17,18 +17,16 @@ import (
 func JudgeCode(srcDir string) *JudgementReply {
 	println(srcDir)
 	input := C.judge_input_t{
-		test_dir_path:   C.CString("/home/mehrad/Projects/vjudge/vjudge-server/resources/testdir"),
-		src_files_count: C.size_t(1),
-		src_file_paths:  C.CString("/home/mehrad/Projects/vjudge/vjudge-server/resources/ram.v"), // Simplifying for one file
+		test_dir_path: C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/testdir"),
+		src_dir_path:  C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/srcdir"), // Simplifying for one file
 	}
 	defer C.free(unsafe.Pointer(input.test_dir_path))
-	defer C.free(unsafe.Pointer(*input.src_file_paths))
+	defer C.free(unsafe.Pointer(input.src_dir_path))
 
 	var result C.judge_result_t
 
 	C.run_judge(&input, &result)
 
-	println(result.error)
 	if result.passed {
 		fmt.Println("All tests passed!")
 	} else {
