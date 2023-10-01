@@ -23,8 +23,8 @@ func (s *server) JudgeCode(ctx context.Context, in *judge.SubmissionRequest) (*j
 
 func cloneCodeFromGitHub(gitHubURL string) bool {
 	httpsAuth := &http.BasicAuth{
-		Username: "MehradMilan",                              // this can be anything except an empty string
-		Password: "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", // ideally, your GitHub token
+		Username: "", // this can be anything except an empty string
+		Password: "", // ideally, your GitHub token
 	}
 	// urlParts := strings.Split(gitHubURL, "/")
 	_, err := git.PlainClone("../../resources", false, &git.CloneOptions{
@@ -43,7 +43,6 @@ func cloneCodeFromGitHub(gitHubURL string) bool {
 
 func judgeCodeFromGitHubURL(gitHubURL string) *judge.JudgementReply {
 	// TODO: Your logic to pull code and judge it
-	judge.JudgeCode("Meow")
 	// cloneCodeFromGitHub(gitHubURL)
 	return &judge.JudgementReply{
 		Score: 90,
