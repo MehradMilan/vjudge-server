@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CodeJudgeClient interface {
-	JudgeCode(ctx context.Context, in *SubmissionRequest, opts ...grpc.CallOption) (*JudgementReply, error)
+	JudgeCode(ctx context.Context, in *SubmissionRequest, opts ...grpc.CallOption) (*SubmissionReply, error)
 }
 
 type codeJudgeClient struct {
@@ -37,8 +37,8 @@ func NewCodeJudgeClient(cc grpc.ClientConnInterface) CodeJudgeClient {
 	return &codeJudgeClient{cc}
 }
 
-func (c *codeJudgeClient) JudgeCode(ctx context.Context, in *SubmissionRequest, opts ...grpc.CallOption) (*JudgementReply, error) {
-	out := new(JudgementReply)
+func (c *codeJudgeClient) JudgeCode(ctx context.Context, in *SubmissionRequest, opts ...grpc.CallOption) (*SubmissionReply, error) {
+	out := new(SubmissionReply)
 	err := c.cc.Invoke(ctx, CodeJudge_JudgeCode_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (c *codeJudgeClient) JudgeCode(ctx context.Context, in *SubmissionRequest, 
 // All implementations must embed UnimplementedCodeJudgeServer
 // for forward compatibility
 type CodeJudgeServer interface {
-	JudgeCode(context.Context, *SubmissionRequest) (*JudgementReply, error)
+	JudgeCode(context.Context, *SubmissionRequest) (*SubmissionReply, error)
 	mustEmbedUnimplementedCodeJudgeServer()
 }
 
@@ -58,7 +58,7 @@ type CodeJudgeServer interface {
 type UnimplementedCodeJudgeServer struct {
 }
 
-func (UnimplementedCodeJudgeServer) JudgeCode(context.Context, *SubmissionRequest) (*JudgementReply, error) {
+func (UnimplementedCodeJudgeServer) JudgeCode(context.Context, *SubmissionRequest) (*SubmissionReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JudgeCode not implemented")
 }
 func (UnimplementedCodeJudgeServer) mustEmbedUnimplementedCodeJudgeServer() {}

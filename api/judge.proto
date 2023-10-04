@@ -3,20 +3,13 @@ syntax = "proto3";
 package judge;
 
 service CodeJudge {
-  rpc JudgeCode (SubmissionRequest) returns (JudgementReply);
+  rpc JudgeCode (SubmissionRequest) returns (SubmissionReply);
 }
 
 message SubmissionRequest {
   string github_url = 1;
 }
 
-message TestCaseResult {
-  int32 id = 1;
-  string name = 2;
-  bool passed = 3;
-}
-
-message JudgementReply {
-  int32 score = 1;
-  repeated TestCaseResult test_case_results = 2;
+message SubmissionReply {
+  bool submitted = 1;
 }

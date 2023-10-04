@@ -16,17 +16,18 @@ type server struct {
 	judge.UnimplementedCodeJudgeServer
 }
 
-func (s *server) JudgeCode(ctx context.Context, in *judge.SubmissionRequest) (*judge.JudgementReply, error) {
-	judgement := judgeCodeFromGitHubURL(in.GetGithubUrl())
-	return judgement, nil
+func (s *server) JudgeCode(ctx context.Context, in *judge.SubmissionRequest) (*judge.SubmissionReply, error) {
+	go judgeCodeFromGitHubURL(in.GetGithubUrl())
+	return &judge.SubmissionReply{
+		Submitted: true,
+	}, nil
 }
 
 func cloneCodeFromGitHub(gitHubURL string) bool {
 	httpsAuth := &http.BasicAuth{
 		Username: "", // this can be anything except an empty string
-		Password: "", // ideally, your GitHub token
+		Password: "", // ideally, the GitHub token
 	}
-	// urlParts := strings.Split(gitHubURL, "/")
 	_, err := git.PlainClone("../../resources", false, &git.CloneOptions{
 		URL:      gitHubURL,
 		Progress: os.Stdout,
@@ -38,19 +39,10 @@ func cloneCodeFromGitHub(gitHubURL string) bool {
 	return true
 }
 
-// func authenticateInGitHub(username string, passToken string) bool {
-// }
-
-func judgeCodeFromGitHubURL(gitHubURL string) *judge.JudgementReply {
+func judgeCodeFromGitHubURL(gitHubURL string) {
 	// TODO: Your logic to pull code and judge it
-	// cloneCodeFromGitHub(gitHubURL)
-	return &judge.JudgementReply{
-		Score: 90,
-		TestCaseResults: []*judge.TestCaseResult{
-			{Id: 0, Name: "Test1", Passed: true},
-			{Id: 1, Name: "Test2", Passed: true},
-		},
-	}
+	cloneCodeFromGitHub(gitHubURL)
+	judge.JudgeCode("Meow")
 }
 
 func main() {

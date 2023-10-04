@@ -13,12 +13,21 @@ import (
 	"unsafe"
 )
 
+type TestcaseResult struct {
+	Name   string
+	Passed bool
+}
+type JudgeResult struct {
+	Testcases []TestcaseResult `json:"testcases"`
+	score     int
+}
+
 // This file can contain any functions needed to implement the judge logic.
-func JudgeCode(srcDir string) *JudgementReply {
+func JudgeCode(srcDir string) *JudgeResult {
 	println(srcDir)
 	input := C.judge_input_t{
-		test_dir_path: C.CString(""),
-		src_dir_path:  C.CString(""), // Simplifying for one file
+		test_dir_path: C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/testdir"),
+		src_dir_path:  C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/srcdir/"), // Simplifying for one file
 	}
 	defer C.free(unsafe.Pointer(input.test_dir_path))
 	defer C.free(unsafe.Pointer(input.src_dir_path))
@@ -33,5 +42,5 @@ func JudgeCode(srcDir string) *JudgementReply {
 	} else {
 		fmt.Printf("%d out of %d tests passed\n", result.passed_tests_count, result.tests_count)
 	}
-	return &JudgementReply{}
+	return &JudgeResult{}
 }

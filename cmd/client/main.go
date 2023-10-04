@@ -24,8 +24,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not judge code: %v", err)
 	}
-	log.Printf("Score: %d", r.GetScore())
-	for _, tc := range r.GetTestCaseResults() {
-		log.Printf("Test Case %s: Passed=%v", tc.GetName(), tc.GetPassed())
-	}
+	log.Printf("Submission: %t", r.GetSubmitted())
 }
