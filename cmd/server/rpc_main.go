@@ -45,7 +45,7 @@ func judgeCodeFromGitHubURL(gitHubURL string) {
 	judge.JudgeCode("Meow")
 }
 
-func main() {
+func rpc_main() {
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
