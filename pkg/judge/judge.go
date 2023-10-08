@@ -27,7 +27,7 @@ func JudgeCode(srcDir string) *JudgeResult {
 	println(srcDir)
 	input := C.judge_input_t{
 		test_dir_path: C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/testdir"),
-		src_dir_path:  C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/srcdir/"), // Simplifying for one file
+		src_dir_path:  C.CString(srcDir), // Simplifying for one file
 	}
 	defer C.free(unsafe.Pointer(input.test_dir_path))
 	defer C.free(unsafe.Pointer(input.src_dir_path))
