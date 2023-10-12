@@ -1,10 +1,10 @@
 package judge
 
 /*
-#cgo CFLAGS: -I/core/ -I/core/src -I/core/include
-#cgo LDFLAGS: -L/core/ /core/build/vjudge.o /core/build/libvcd.o
-#include "vjudge.h"
-#include "libvcd.h"
+#cgo CFLAGS: -I./../../lib/libvjudge/src -I./../../lib/libvcd/src
+#cgo LDFLAGS: -L./../../lib/libvjudge/build -L./../../lib/libvcd/build -lvcd -lvjudge
+#include <libvjudge.h>
+#include <libvcd.h>
 #include <stdlib.h>
 */
 import "C"

@@ -1,3 +1,6 @@
-[submodule "lib/vjudge-core"]
-	path = lib/vjudge-core
-	url = https://github.com/sorousherafat/vjudge-core.git
+[submodule "lib/libvcd"]
+	path = lib/libvcd
+	url = https://github.com/sorousherafat/libvcd.git
+[submodule "lib/libvjudge"]
+	path = lib/libvjudge
+	url = https://github.com/sorousherafat/libvjudge.git
