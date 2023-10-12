@@ -1,3 +1,3 @@
-[submodule "cmd/webhook/lib/vjudge-core"]
-	path = cmd/webhook/lib/vjudge-core
+[submodule "lib/vjudge-core"]
+	path = lib/vjudge-core
 	url = https://github.com/sorousherafat/vjudge-core.git
