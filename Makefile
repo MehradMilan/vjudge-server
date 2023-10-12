@@ -13,4 +13,4 @@ compose-up:
 	@echo "Starting the application using Docker Compose..."
 	@sudo docker-compose up
 
-.PHONY: run build-image compose-up
+.PHONY: build-image compose-up
