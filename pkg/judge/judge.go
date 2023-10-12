@@ -1,8 +1,8 @@
 package judge
 
 /*
-#cgo CFLAGS: -I/home/mehrad/Projects/vjudge/vjudge-core
-#cgo LDFLAGS: -L/home/mehrad/Projects/vjudge/vjudge-core /home/mehrad/Projects/vjudge/vjudge-core/vjudge.o /home/mehrad/University/TA/402-1/DSD/libvcd/libvcd.o
+#cgo CFLAGS: -I/core/ -I/core/src -I/core/include
+#cgo LDFLAGS: -L/core/ /core/build/vjudge.o /core/build/libvcd.o
 #include "vjudge.h"
 #include "libvcd.h"
 #include <stdlib.h>
@@ -26,7 +26,7 @@ type JudgeResult struct {
 func JudgeCode(srcDir string) *JudgeResult {
 	println(srcDir)
 	input := C.judge_input_t{
-		test_dir_path: C.CString("/home/mehrad/Projects/vjudge/vjudge-core/test/testdir"),
+		test_dir_path: C.CString("/core/test"),
 		src_dir_path:  C.CString(srcDir), // Simplifying for one file
 	}
 	defer C.free(unsafe.Pointer(input.test_dir_path))
