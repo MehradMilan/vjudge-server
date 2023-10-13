@@ -95,7 +95,7 @@ func extractTestCases(result C.judge_result_t) []TestcaseResult {
 func JudgeCode(srcDir string, testDir string) *JudgeResult {
 	println(srcDir)
 	input := C.judge_input_t{
-		test_dir_path: C.CString("/core/test"),
+		test_dir_path: C.CString(testDir),
 		src_dir_path:  C.CString(srcDir), // Simplifying for one file
 	}
 	defer C.free(unsafe.Pointer(input.test_dir_path))
