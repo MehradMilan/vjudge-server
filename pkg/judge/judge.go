@@ -75,7 +75,8 @@ func extractTestCases(result C.judge_result_t) []TestcaseResult {
 	var testResults []TestcaseResult
 	for i := 0; i < int(result.tests_count); i++ {
 		// Accessing C struct fields using pointer dereferencing
-		cTest := (*C.test_t)(unsafe.Pointer(uintptr(unsafe.Pointer(result.tests)) + uintptr(i)*unsafe.Sizeof(result.tests[0])))
+		// cTest := (*C.test_t)(unsafe.Pointer(uintptr(unsafe.Pointer(result.tests)) + uintptr(i)*unsafe.Sizeof(result.tests[0])))
+		cTest := &result.tests[i]
 		testName := C.GoString(cTest.name)
 		passed := bool(cTest.passed)
 
