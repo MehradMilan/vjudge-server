@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log/slog"
 	"net/http"
-	"vjudge/pkg/judge"
 	"vjudge/pkg/util"
 
 	"github.com/gin-gonic/gin"
@@ -56,6 +55,6 @@ func Webhook(c *gin.Context) {
 		return
 	}
 
+	RunJudgeProcess(payload)
 	// Push the job
-	judge.JudgeCode("/home/mehrad/Projects/vjudge/vjudge-core/test/srcdir/")
 }
