@@ -2,6 +2,7 @@ package util
 
 import (
 	"log/slog"
+	"math"
 	"os"
 	"os/exec"
 )
@@ -28,4 +29,9 @@ func ExecToSTD(command string, arguments ...string) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
+}
+
+func RoundFloat(val float64, precision uint) float64 {
+	ratio := math.Pow(10, float64(precision))
+	return math.Round(val*ratio) / ratio
 }
