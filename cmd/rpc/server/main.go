@@ -42,7 +42,7 @@ func cloneCodeFromGitHub(gitHubURL string) bool {
 func judgeCodeFromGitHubURL(gitHubURL string) {
 	// TODO: Your logic to pull code and judge it
 	cloneCodeFromGitHub(gitHubURL)
-	judge.JudgeCode("Meow")
+	// judge.JudgeCode("Meow")
 }
 
 func main() {

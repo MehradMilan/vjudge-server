@@ -19,7 +19,7 @@ func main() {
 	if len(os.Args) > 1 {
 		readConfig(os.Args[1])
 	} else {
-		readConfig("config.json")
+		readConfig("config/config-webhook.json")
 	}
 	r := gin.Default()
 	webhook.Secret = []byte(config.Secret)
