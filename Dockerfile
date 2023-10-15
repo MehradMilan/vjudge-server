@@ -1,5 +1,8 @@
 FROM golang:1.21.1
 
+# Install Icarus Verilog
+RUN apt -y update && apt -y install iverilog
+
 # Clone the repository
 WORKDIR /app
 COPY . .
