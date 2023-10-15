@@ -5,9 +5,11 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"time"
 	"vjudge/pkg/judge"
 
 	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 )
 
@@ -148,7 +150,8 @@ func commitAndPushChanges(repo *git.Repository, worktree *git.Worktree, commitMe
 
 	// Commit changes
 	_, err = worktree.Commit(commitMessage, &git.CommitOptions{
-		All: true,
+		All:    true,
+		Author: &object.Signature{Name: "Autograder", Email: "noreply@autograder.com", When: time.Now()},
 	})
 	if err != nil {
 		return err
