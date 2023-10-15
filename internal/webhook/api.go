@@ -57,6 +57,9 @@ func RunJudgeProcess(payload githubPayload) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	defer cleanupTempDir(tmpDir)
+
 	repo, err := git.PlainOpen(tmpDir)
 	if err != nil {
 		log.Fatal(err)
@@ -77,11 +80,6 @@ func RunJudgeProcess(payload githubPayload) {
 
 	// Commit, push, and cleanup
 	err = commitAndPushChanges(repo, worktree, "Commit message")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = cleanupTempDir(tmpDir)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -157,9 +155,15 @@ func commitAndPushChanges(repo *git.Repository, worktree *git.Worktree, commitMe
 		return err
 	}
 
+	httpAuth := &http.BasicAuth{
+		Username: config.GitUsername, // this can be anything except an empty string
+		Password: config.GitPassword, // ideally, the GitHub token
+	}
+
 	// Push changes to the remote repository
 	err = repo.Push(&git.PushOptions{
 		RemoteName: "origin",
+		Auth:       httpAuth,
 	})
 	if err != nil {
 		return err
