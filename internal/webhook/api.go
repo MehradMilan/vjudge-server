@@ -79,7 +79,7 @@ func RunJudgeProcess(payload githubPayload) {
 	}
 
 	// Commit, push, and cleanup
-	err = commitAndPushChanges(repo, worktree, "Commit message")
+	err = commitAndPushChanges(repo, worktree, "Updated `grade.txt`")
 	if err != nil {
 		log.Fatal(err)
 	}
