@@ -44,16 +44,28 @@ const (
 )
 
 func getStatus(code int) ErrorStatus {
+	const internal_error_message = "An internal error occurred while processing your commit. Please contact the teaching assistants."
 	switch code {
 	case C.VJUDGE_NO_ERROR:
-		return ErrorStatus{VJUDGE_NO_ERROR, "You pushed successfully!\nWait for the judge result."}
-	case C.VJUDGE_ERROR_OPENING_VCD_FILE:
-		return ErrorStatus{VJUDGE_ERROR_OPENING_VCD_FILE, "An error occured while processing your commit.\nTry again later."}
+		return ErrorStatus{VJUDGE_NO_ERROR, "Your code was judged successfully!"}
 	case C.VJUDGE_ERROR_COMPILING_VERILOG_FILE:
-		return ErrorStatus{VJUDGE_ERROR_COMPILING_VERILOG_FILE, "Failed cloning the repository.\n"}
+		return ErrorStatus{VJUDGE_ERROR_COMPILING_VERILOG_FILE, "An error occurred while compiling your Verilog files. Please make sure your code works correctly."}
+	case C.VJUDGE_ERROR_OPENING_SRC_DIRECTORY:
+		return ErrorStatus{VJUDGE_ERROR_OPENING_SRC_DIRECTORY, internal_error_message + " But first, make sure your code is inside the `src/` directory."}
+	case C.VJUDGE_ERROR_OPENING_VCD_FILE:
+		return ErrorStatus{VJUDGE_ERROR_OPENING_VCD_FILE, internal_error_message}
+	case C.VJUDGE_ERROR_OPENING_TEST_DIRECTORY:
+		return ErrorStatus{VJUDGE_ERROR_OPENING_TEST_DIRECTORY, internal_error_message}
+	case C.VJUDGE_ERROR_HANDLING_TEMP_DIRECTORY:
+		return ErrorStatus{VJUDGE_ERROR_HANDLING_TEMP_DIRECTORY, internal_error_message}
+	case C.VJUDGE_ERROR_ASSERTIONS_FILE_WRONG_FORMAT:
+		return ErrorStatus{VJUDGE_ERROR_ASSERTIONS_FILE_WRONG_FORMAT, internal_error_message}
+	case C.VJUDGE_ERROR_ASSERTIONS_FILE_NOT_EXISTS:
+		return ErrorStatus{VJUDGE_ERROR_ASSERTIONS_FILE_NOT_EXISTS, internal_error_message}
+
 	default:
 		return ErrorStatus{-1, "Unknown status code"}
-	} //TODO: Complete
+	}
 }
 
 func isPassed(testsCount int, passedTestsCount int) bool {
