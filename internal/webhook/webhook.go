@@ -2,6 +2,7 @@ package webhook
 
 import (
 	"encoding/json"
+	"io"
 	"log/slog"
 	"net/http"
 	"vjudge/pkg/util"
@@ -19,14 +20,12 @@ func Webhook(c *gin.Context) {
 		slog.String("event", event),
 		slog.String("ip", c.GetHeader("CF-Connecting-IP")))
 	// Read the body to validate hash
-	body := make([]byte, 64*1024)
-	readBytes, err := c.Request.Body.Read(body)
+	body, err := io.ReadAll(c.Request.Body)
 	if err != nil {
 		logger.With(util.SlogError(err)).Error("cannot read body of request")
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
-	body = body[:readBytes]
 	// Validate the hash
 	expectedHash := c.GetHeader("X-Hub-Signature-256")
 	if len(expectedHash) > 7 {
