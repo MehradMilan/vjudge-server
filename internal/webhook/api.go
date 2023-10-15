@@ -64,7 +64,7 @@ func RunJudgeProcess(payload githubPayload) {
 		log.Fatal(err)
 	}
 
-	judgeResult := judge.JudgeCode(tmpDir, config.TestDirectory)
+	judgeResult := judge.JudgeCode(tmpDir+"/src", config.TestDirectory)
 
 	// Write grade.txt file
 	gradeFilePath := filepath.Join(tmpDir, "grade.txt")
