@@ -41,7 +41,7 @@ func CloneRepositoryFromGithub(repoData CloneRepoData) (string, error) {
 }
 
 func RunJudgeProcess(payload githubPayload) {
-	if len(os.Args) > 1 {
+	if len(os.Args) > 2 {
 		readConfig(os.Args[2])
 	} else {
 		readConfig("config/config-judge.json")
