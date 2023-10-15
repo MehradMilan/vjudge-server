@@ -54,6 +54,13 @@ func Webhook(c *gin.Context) {
 		return
 	}
 
+	// Don't accept grading pushes by the judge
+	pusher := payload.Pusher
+	if pusher.Name == config.JudgeName && pusher.Email == config.JudgeEmail {
+		logger.With(slog.String("judged", payload.Ref)).Debug("ignored grading push")
+		return
+	}
+
 	RunJudgeProcess(payload)
 	// Push the job
 }

@@ -149,7 +149,7 @@ func commitAndPushChanges(repo *git.Repository, worktree *git.Worktree, commitMe
 	// Commit changes
 	_, err = worktree.Commit(commitMessage, &git.CommitOptions{
 		All:    true,
-		Author: &object.Signature{Name: "Autograder", Email: "noreply@autograder.com", When: time.Now()},
+		Author: &object.Signature{Name: config.JudgeName, Email: config.JudgeEmail, When: time.Now()},
 	})
 	if err != nil {
 		return err

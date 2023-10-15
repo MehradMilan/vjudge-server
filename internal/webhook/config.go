@@ -12,6 +12,8 @@ var config struct {
 	GitPassword   string `json:"password"`
 	TmpDirectory  string `json:"tmpdir"`
 	TestDirectory string `json:"testdir"`
+	JudgeName     string `json:"judgeName"`
+	JudgeEmail    string `json:"judgeEmail"`
 }
 
 // readConfig will read the config file
