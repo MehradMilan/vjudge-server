@@ -69,13 +69,15 @@ func RunJudgeProcess(payload githubPayload) {
 		log.Fatal(err)
 	}
 
-	judgeResult := judge.JudgeCode(tmpDir+"/src", config.TestDirectory)
+	for _, hwDir := range config.HWDirectories {
+		judgeResult := judge.JudgeCode(filepath.Join(tmpDir, config.SRCDirectory, hwDir), filepath.Join(config.TestDirectory, hwDir))
 
-	// Write grade.txt file
-	gradeFilePath := filepath.Join(tmpDir, "grade.txt")
-	writeErr := writeGradeFile(judgeResult, gradeFilePath)
-	if writeErr != nil {
-		log.Fatal(err)
+		// Write grade.txt file
+		gradeFilePath := filepath.Join(tmpDir, hwDir, "grade.txt")
+		writeErr := writeGradeFile(judgeResult, gradeFilePath)
+		if writeErr != nil {
+			log.Fatal(err)
+		}
 	}
 
 	// Commit, push, and cleanup

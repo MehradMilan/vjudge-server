@@ -8,12 +8,14 @@ import (
 )
 
 var config struct {
-	GitUsername   string `json:"username"`
-	GitPassword   string `json:"password"`
-	TmpDirectory  string `json:"tmpdir"`
-	TestDirectory string `json:"testdir"`
-	JudgeName     string `json:"judgeName"`
-	JudgeEmail    string `json:"judgeEmail"`
+	GitUsername   string   `json:"username"`
+	GitPassword   string   `json:"password"`
+	TmpDirectory  string   `json:"tmpdir"`
+	SRCDirectory  string   `json:"srcdir"`
+	TestDirectory string   `json:"testdir"`
+	HWDirectories []string `json:"hwdirs"`
+	JudgeName     string   `json:"judgeName"`
+	JudgeEmail    string   `json:"judgeEmail"`
 }
 
 // readConfig will read the config file
