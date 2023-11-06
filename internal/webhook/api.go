@@ -72,8 +72,8 @@ func RunJudgeProcess(payload githubPayload) {
 	for _, hwDir := range config.HWDirectories {
 		judgeResult := judge.JudgeCode(filepath.Join(tmpDir, config.SRCDirectory, hwDir), filepath.Join(config.TestDirectory, hwDir))
 		// Write grade.txt file
-		gradeFilePath := filepath.Join(tmpDir, config.SRCDirectory, hwDir, "grade.txt")
-		writeErr := writeGradeFile(judgeResult, gradeFilePath)
+		gradeFilePath := filepath.Join(tmpDir, config.SRCDirectory, hwDir)
+		writeErr := writeGradeFile(judgeResult, gradeFilePath, "grade.txt")
 		if writeErr != nil {
 			log.Fatal(err)
 		}
@@ -86,8 +86,15 @@ func RunJudgeProcess(payload githubPayload) {
 	}
 }
 
-func writeGradeFile(judgeResult *judge.JudgeResult, filePath string) error {
+func writeGradeFile(judgeResult *judge.JudgeResult, dirPath string, filename string) error {
 	// Open the file in write mode. Create it if it doesn't exist.
+	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+		er := os.MkdirAll(dirPath, os.ModePerm)
+		if er != nil {
+			log.Fatal(err)
+		}
+	}
+	filePath := filepath.Join(dirPath, filename)
 	file, err := os.Create(filePath)
 	if err != nil {
 		return err
