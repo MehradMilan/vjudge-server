@@ -71,9 +71,8 @@ func RunJudgeProcess(payload githubPayload) {
 
 	for _, hwDir := range config.HWDirectories {
 		judgeResult := judge.JudgeCode(filepath.Join(tmpDir, config.SRCDirectory, hwDir), filepath.Join(config.TestDirectory, hwDir))
-
 		// Write grade.txt file
-		gradeFilePath := filepath.Join(tmpDir, hwDir, "grade.txt")
+		gradeFilePath := filepath.Join(tmpDir, config.SRCDirectory, hwDir, "grade.txt")
 		writeErr := writeGradeFile(judgeResult, gradeFilePath)
 		if writeErr != nil {
 			log.Fatal(err)
@@ -143,7 +142,7 @@ func writeGradeFile(judgeResult *judge.JudgeResult, filePath string) error {
 
 func commitAndPushChanges(repo *git.Repository, worktree *git.Worktree, commitMessage string) error {
 	// Stage all changes (similar to `git add .`)
-	_, err := worktree.Add("grade.txt")
+	_, err := worktree.Add(".")
 	if err != nil {
 		return err
 	}
