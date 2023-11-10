@@ -42,7 +42,7 @@ func CloneRepositoryFromGithub(repoData CloneRepoData) (string, error) {
 	return tmpDir, nil
 }
 
-func RunJudgeProcess(payload githubPayload, homeworkName string, homework Homework) {
+func RunJudgeProcess(payload githubPayload, homeworkName string, homework *Homework) {
 	if len(os.Args) > 2 {
 		readConfig(os.Args[2])
 	} else {

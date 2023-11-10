@@ -68,7 +68,7 @@ func Webhook(c *gin.Context) {
 		return
 	}
 
-	homework, ok := config.Homeworks[homeworkName]
+	homework, ok := getHomework(homeworkName)
 	if !ok {
 		logger.With(slog.String("name", payload.Ref)).Warn("no homework with the given name")
 		return
@@ -85,4 +85,14 @@ func getHomeworkName(repositoryName string) (string, error) {
 	}
 
 	return repositoryName[:firstDashIndex], nil
+}
+
+func getHomework(name string) (*Homework, bool) {
+	for _, homework := range config.Homeworks {
+		if homework.Name == name {
+			return &homework, true
+		}
+	}
+
+	return nil, false
 }
