@@ -2,9 +2,11 @@ package webhook
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"log/slog"
 	"net/http"
+	"strings"
 	"vjudge/pkg/util"
 
 	"github.com/gin-gonic/gin"
@@ -60,6 +62,27 @@ func Webhook(c *gin.Context) {
 		return
 	}
 
-	RunJudgeProcess(payload)
+	homeworkName, err := getHomeworkName(payload.Repository.Name)
+	if err != nil {
+		logger.With(slog.String("name", payload.Ref)).Warn(err.Error())
+		return
+	}
+
+	homework, ok := config.Homeworks[homeworkName]
+	if !ok {
+		logger.With(slog.String("name", payload.Ref)).Warn("no homework with the given name")
+		return
+	}
+
+	RunJudgeProcess(payload, homework)
 	// Push the job
+}
+
+func getHomeworkName(repositoryName string) (string, error) {
+	firstDashIndex := strings.Index(repositoryName, "-")
+	if firstDashIndex == -1 {
+		return "", errors.New("could not extract homework name")
+	}
+
+	return repositoryName[:firstDashIndex], nil
 }

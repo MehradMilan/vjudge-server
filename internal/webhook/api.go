@@ -42,7 +42,7 @@ func CloneRepositoryFromGithub(repoData CloneRepoData) (string, error) {
 	return tmpDir, nil
 }
 
-func RunJudgeProcess(payload githubPayload) {
+func RunJudgeProcess(payload githubPayload, homework Homework) {
 	if len(os.Args) > 2 {
 		readConfig(os.Args[2])
 	} else {
@@ -69,10 +69,10 @@ func RunJudgeProcess(payload githubPayload) {
 		log.Fatal(err)
 	}
 
-	for _, hwDir := range config.HWDirectories {
-		judgeResult := judge.JudgeCode(filepath.Join(tmpDir, config.SRCDirectory, hwDir), filepath.Join(config.TestDirectory, hwDir))
+	for _, question := range homework.Questions {
+		judgeResult := judge.JudgeCode(filepath.Join(tmpDir, config.SRCDirectory, question), filepath.Join(config.TestDirectory, question))
 		// Write grade.txt file
-		gradeFilePath := filepath.Join(tmpDir, config.SRCDirectory, hwDir, "grade.txt")
+		gradeFilePath := filepath.Join(tmpDir, config.SRCDirectory, question, "grade.txt")
 		writeErr := writeGradeFile(judgeResult, gradeFilePath)
 		if writeErr != nil {
 			log.Fatal(err)

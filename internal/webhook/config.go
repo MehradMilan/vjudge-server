@@ -7,15 +7,19 @@ import (
 	"vjudge/pkg/util"
 )
 
+type Homework struct {
+	Questions []string `json:"questions"`
+}
+
 var config struct {
-	GitUsername   string   `json:"username"`
-	GitPassword   string   `json:"password"`
-	TmpDirectory  string   `json:"tmpdir"`
-	SRCDirectory  string   `json:"srcdir"`
-	TestDirectory string   `json:"testdir"`
-	HWDirectories []string `json:"hwdirs"`
-	JudgeName     string   `json:"judgeName"`
-	JudgeEmail    string   `json:"judgeEmail"`
+	GitUsername   string              `json:"username"`
+	GitPassword   string              `json:"password"`
+	TmpDirectory  string              `json:"tmpdir"`
+	SRCDirectory  string              `json:"srcdir"`
+	TestDirectory string              `json:"testdir"`
+	JudgeName     string              `json:"judgeName"`
+	JudgeEmail    string              `json:"judgeEmail"`
+	Homeworks     map[string]Homework `json:"homeworks"`
 }
 
 // readConfig will read the config file
