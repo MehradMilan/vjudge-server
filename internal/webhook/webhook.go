@@ -74,7 +74,7 @@ func Webhook(c *gin.Context) {
 		return
 	}
 
-	RunJudgeProcess(payload, homework)
+	RunJudgeProcess(payload, homeworkName, homework)
 	// Push the job
 }
 
