@@ -43,11 +43,6 @@ func CloneRepositoryFromGithub(repoData CloneRepoData) (string, error) {
 }
 
 func RunJudgeProcess(payload githubPayload, homeworkName string, homework *Homework) {
-	if len(os.Args) > 2 {
-		readConfig(os.Args[2])
-	} else {
-		readConfig("config/config-judge.json")
-	}
 	repoData := &CloneRepoData{
 		RepoUrl:   payload.Repository.Url,
 		OwnerName: payload.Repository.Owner.Name,
@@ -94,7 +89,15 @@ func writeGradeFile(judgeResult *judge.JudgeResult, filePath string) error {
 	}
 	defer file.Close()
 
+	loc, _ := time.LoadLocation("Asia/Tehran")
+	now := time.Now().In(loc).Format(time.ANSIC)
+
 	// Write human-friendly data to the file
+	_, err = file.WriteString("Time: " + now + "\n")
+	if err != nil {
+		return err
+	}
+
 	_, err = file.WriteString("Status: " + judgeResult.Status.Message + "\n")
 	if err != nil {
 		return err
