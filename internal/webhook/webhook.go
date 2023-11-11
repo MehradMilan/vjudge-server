@@ -6,6 +6,7 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+	"os"
 	"strings"
 	"vjudge/pkg/util"
 
@@ -16,6 +17,12 @@ var Secret []byte
 
 // Webhook is the function which gin should call when GitHub accesses it
 func Webhook(c *gin.Context) {
+	if len(os.Args) > 2 {
+		readConfig(os.Args[2])
+	} else {
+		readConfig("config/config-judge.json")
+	}
+
 	event := c.GetHeader("X-GitHub-Event")
 	logger := slog.With(
 		slog.String("id", c.GetHeader("X-GitHub-Delivery")),
