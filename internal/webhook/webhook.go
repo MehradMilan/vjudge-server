@@ -58,8 +58,8 @@ func Webhook(c *gin.Context) {
 		return
 	}
 	// Accept main pushes only
-	if payload.Ref != "refs/heads/main" {
-		logger.With(slog.String("ref", payload.Ref)).Debug("ignored non main ref")
+	if payload.Ref != "refs/heads/main" || payload.Ref != "refs/heads/main" {
+		logger.With(slog.String("ref", payload.Ref)).Debug("ignored non main-master ref")
 		return
 	}
 
@@ -74,7 +74,6 @@ func Webhook(c *gin.Context) {
 		logger.With(slog.String("name", payload.Ref)).Warn(err.Error())
 		return
 	}
-
 	homework, ok := getHomework(homeworkName)
 	if !ok {
 		logger.With(slog.String("name", payload.Ref)).Warn("no homework with the given name")
