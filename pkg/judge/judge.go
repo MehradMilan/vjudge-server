@@ -1,8 +1,7 @@
 package judge
 
 /*
-#cgo CFLAGS: -I./../../lib/libvjudge/src -I./../../lib/libvcd/src
-#cgo LDFLAGS: -L./../../lib/libvjudge/build -L./../../lib/libvcd/build -lvcd -lvjudge
+#cgo LDFLAGS: -lvcd -lvjudge
 #include <libvjudge.h>
 #include <libvcd.h>
 #include <stdlib.h>
