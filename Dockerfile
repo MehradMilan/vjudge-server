@@ -11,6 +11,10 @@ RUN git clone https://github.com/sorousherafat/libvjudge.git && cd libvjudge && 
 
 # Clone the repository
 WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
 COPY . .
 
 # Copy the local source files to the container
