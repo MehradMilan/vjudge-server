@@ -2,8 +2,8 @@ package judge
 
 /*
 #cgo LDFLAGS: -lvcd -lvjudge
-#include <libvjudge.h>
-#include <libvcd.h>
+#include <vjudge.h>
+#include <vcd.h>
 #include <stdlib.h>
 */
 import "C"
@@ -115,7 +115,7 @@ func JudgeCode(srcDir string, testDir string) *JudgeResult {
 
 	var result C.judge_result_t
 
-	C.run_judge(&input, &result)
+	C.vjudge_run(&input, &result)
 
 	fmt.Println(result.passed_tests_count)
 	if result.passed {
