@@ -71,7 +71,7 @@ func Webhook(c *gin.Context) {
 
 	// Ignore commit with commit message starting with [no-judge]
 	if strings.HasPrefix(payload.HeadCommit.Message, "[no-judge]") {
-		logger.With(slog.String("commit", payload.HeadCommit.ID)).Debug("ignored commit with [no-judge] prefix")
+		logger.With(slog.String("commit:", payload.HeadCommit.Id)).Debug("ignored commit with [no-judge] prefix")
 		return
 	}
 
