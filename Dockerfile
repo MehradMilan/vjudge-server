@@ -11,13 +11,10 @@ RUN git clone https://github.com/sorousherafat/libvjudge.git && make -C libvjudg
 WORKDIR /app
 
 COPY go.mod go.sum ./
-RUN --mount=type=cache,target="/root/.cache/go-vendor" go mod download
+RUN --mount=type=cache,target="/go/pkg/mod" go mod download
 
 COPY . .
-
-# Copy the local source files to the container
-ENV GOCACHE=/root/.cache/go-build
-RUN --mount=type=cache,target="/root/.cache/go-build" go build -o webhook ./cmd/webhook
+RUN --mount=type=cache,target="/go/pkg/mod" go build -o webhook ./cmd/webhook
 
 # Expose the application's port
 EXPOSE 8000
