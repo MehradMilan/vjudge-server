@@ -58,7 +58,7 @@ func Webhook(c *gin.Context) {
 		return
 	}
 	// Accept main pushes only
-	if payload.Ref != "refs/heads/main" || payload.Ref != "refs/heads/main" {
+	if payload.Ref != "refs/heads/main" || payload.Ref != "refs/heads/master" {
 		logger.With(slog.String("ref", payload.Ref)).Debug("ignored non main-master ref")
 		return
 	}
@@ -66,6 +66,12 @@ func Webhook(c *gin.Context) {
 	// Don't accept grading pushes by the judge
 	if payload.Pusher.Name == config.GitUsername {
 		logger.With(slog.String("judged", payload.Ref)).Debug("ignored grading push")
+		return
+	}
+
+	// Ignore commit with commit message starting with [no-judge]
+	if strings.HasPrefix(payload.HeadCommit.Message, "[no-judge]") {
+		logger.With(slog.String("commit", payload.HeadCommit.ID)).Debug("ignored commit with [no-judge] prefix")
 		return
 	}
 
