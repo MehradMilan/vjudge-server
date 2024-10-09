@@ -1,6 +1,8 @@
 module vjudge
 
-go 1.18
+go 1.21
+
+toolchain go1.23.2
 
 require (
 	github.com/gin-gonic/gin v1.9.1
@@ -22,6 +24,7 @@ require (
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/google/go-github/v66 v66.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect

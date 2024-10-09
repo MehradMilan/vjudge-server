@@ -11,7 +11,7 @@ RUN git clone https://github.com/sorousherafat/libvjudge.git && make -C libvjudg
 WORKDIR /app
 
 COPY go.mod go.sum ./
-RUN --mount=type=cache,target="/root/.cache/go-vendor" go mod vendor
+RUN --mount=type=cache,target="/root/.cache/go-vendor" go mod download
 
 COPY . .
 
